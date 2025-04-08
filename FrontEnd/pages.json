@@ -1,0 +1,42 @@
+{
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarTitleText": "练习你的发音",
+			"navigationStyle": "custom"
+		}
+	},
+	{
+		"path" : "pages/index/MedicAim/MedicAim",
+		"style" : 
+		{
+			"navigationBarTitleText" : "Medical Purpose",
+			"navigationStyle": "custom"
+		}
+	},
+	{
+		"path" : "pages/index/PracticeAim/PracticeAim",
+		"style" : 
+		{
+			"navigationBarTitleText" : "Practice Your Tone!",
+			"navigationStyle": "custom"
+		}
+	},
+	{
+		"path" : "pages/index/trial/trial",
+		"style" : 
+		{
+			"navigationBarTitleText" : "",
+			"navigationStyle": "custom"
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	}
+}

@@ -1,0 +1,51 @@
+.practice-aim.data-v-ac61a61f {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+.paragraph.data-v-ac61a61f {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.paragraph p.data-v-ac61a61f {
+  margin: 10px 0;
+}
+.response.data-v-ac61a61f {
+  display: block;
+  color: #4caf50; /* Green for correct responses */
+  font-size: 0.9em;
+}
+.recording-section.data-v-ac61a61f {
+  margin: 20px 0;
+}
+.frequency-bars.data-v-ac61a61f {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.bar.data-v-ac61a61f {
+  width: 8px;
+  margin: 0 2px;
+  background-color: #4caf50; /* Green bars */
+  transition: height 0.1s;
+}
+.record-button.data-v-ac61a61f {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4caf50; /* Green button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.record-button.recording.data-v-ac61a61f {
+  background-color: #f44336; /* Red button when recording */
+}
+.score.data-v-ac61a61f {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #4caf50; /* Green for score */
+}

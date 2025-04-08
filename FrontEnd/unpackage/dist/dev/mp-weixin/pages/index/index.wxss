@@ -1,0 +1,35 @@
+.container.data-v-1cf27b2a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 20px;
+}
+.button.data-v-1cf27b2a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px; /* Width of the button */
+  height: 200px; /* Height of the button (3:4 ratio) */
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.left-button.data-v-1cf27b2a {
+  background-color: #FF6F61; /* Coral color */
+}
+.right-button.data-v-1cf27b2a {
+  background-color: #6B5B95; /* Purple color */
+}
+.button.data-v-1cf27b2a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.container.data-v-1cf27b2a {
+		padding: 20px;
+		font-size: 14px;
+		line-height: 24px;
+}

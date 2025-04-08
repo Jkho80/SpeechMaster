@@ -1,0 +1,56 @@
+.practice-aim.data-v-b1f85601 {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+.paragraph.data-v-b1f85601 {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.paragraph p.data-v-b1f85601 {
+  margin: 10px 0;
+}
+.response.data-v-b1f85601 {
+  display: block;
+  color: #4caf50; /* Green for correct responses */
+  font-size: 0.9em;
+}
+.recording-section.data-v-b1f85601 {
+  margin: 20px 0;
+}
+.frequency-bars.data-v-b1f85601 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.bar.data-v-b1f85601 {
+  width: 8px;
+  margin: 0 2px;
+  background-color: #4caf50; /* Green bars */
+  transition: height 0.1s;
+}
+.record-button.data-v-b1f85601 {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4caf50; /* Green button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.record-button.recording.data-v-b1f85601 {
+  background-color: #f44336; /* Red button when recording */
+}
+.score.data-v-b1f85601 {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #4caf50; /* Green for score */
+}
+.feedback.data-v-b1f85601 {
+  margin-top: 14px;
+  font-size: 1.2em;
+  color: #4caf50; /* Green for score */
+}
