@@ -17,7 +17,6 @@
 ``` shell
 git clone https://github.com/Jkho80/SpeechMaster.git
 ```
-后面记得加上这个repo的git
 
 > 这个后端是在 wsl 上开发的，或许会有 文件路径 或者 机制 不相互兼容，需要自己修改
 
