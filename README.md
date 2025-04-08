@@ -15,11 +15,18 @@
 
 首先，需要把这个项目下载下来，在命令行输入
 ``` shell
-git clone https://github.com/Jkho80/poemscoring.git
+git clone https://github.com/Jkho80/SpeechMaster.git
 ```
 后面记得加上这个repo的git
 
 > 这个后端是在 wsl 上开发的，或许会有 文件路径 或者 机制 不相互兼容，需要自己修改
+
+打开 BackEnd/ 文件夹，在里面打开命令行输入
+
+``` shell
+cd BackEnd
+```
+
 
 通过 pip 或者 conda 创建环境并通过 req.txt 下载 python 相关依赖
 ``` python
@@ -151,3 +158,8 @@ time_mode: str      # 时长类型（"30s"|"1min"|"2min"|"long"，默认30s）
 
 
 ---
+
+
+**第七步**. 运行 `FrontEnd/` 中的代码，通过 npm 或者 yarn 来安装依赖并运行 FrontEnd 前端网页
+
+也可以通过使用 Hbuilder 打开 `FrontEnd/` 文件夹 直接运行
