@@ -162,3 +162,26 @@ time_mode: str      # 时长类型（"30s"|"1min"|"2min"|"long"，默认30s）
 **第七步**. 运行 `FrontEnd/` 中的代码，通过 npm 或者 yarn 来安装依赖并运行 FrontEnd 前端网页
 
 也可以通过使用 Hbuilder 打开 `FrontEnd/` 文件夹 直接运行
+
+---
+
+## 微调
+
+运行完前面的所有指令后只需要运行 `finetune.sh` 即可开始微调模型，微调完成后便可通过输入模型权重路径使用新的模型进行评分。
+
+```python
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+model_dir = os.path.join(script_dir, 'models')
+
+model = AutoModel(model=model_dir)
+
+result = model.generate(
+    input=input,
+    batch_size_s=1, 
+    is_final=True, 
+    sentence_timestamp=True,
+)
+```
