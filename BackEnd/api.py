@@ -49,22 +49,24 @@ device = "cuda"
 ncpu = 4
 
 # ASR 模型
-m = AutoModel(model=asr_model_path,
-                  model_revision=asr_model_revision,
-                  vad_model=vad_model_path,
-                  vad_model_revision=vad_model_revision,
-                  vad_kwargs={"max_single_segment_time": 10000},
-                  punc_model=punc_model_path,
-                  punc_model_revision=punc_model_revision,
-                #   spk_model=spk_model_path,
-                #   spk_model_revision = spk_model_revision,
-                  ngpu=ngpu,
-                  ncpu=ncpu,
-                  device=device,
-                  disable_pbar=True,
-                  disable_log=True,
-                  disable_update=True
-                  )
+m = AutoModel(
+    # model='./models',
+    model=asr_model_path,
+    model_revision=asr_model_revision,
+    vad_model=vad_model_path,
+    vad_model_revision=vad_model_revision,
+    vad_kwargs={"max_single_segment_time": 10000},
+    punc_model=punc_model_path,
+    punc_model_revision=punc_model_revision,
+#   spk_model=spk_model_path,
+#   spk_model_revision = spk_model_revision,
+    ngpu=ngpu,
+    ncpu=ncpu,
+    device=device,
+    disable_pbar=True,
+    disable_log=True,
+    disable_update=True
+    )
 
 regex = r"<\|.*\|>"
 from fastapi.middleware.cors import CORSMiddleware 
@@ -323,9 +325,6 @@ def calculate_score(value, standard) -> int:
 def binary_to_audio(binary_data, output_file, rand_int):
     # 将二进制文件写入临时文件
         temp_file = "temp"+ str(rand_int) +".bin"
-        while os.path.exists(temp_file):
-            i = random.randint(1, rand_max_idx)
-            temp_file = "temp" + str(i) + ".bin"
         
         with open(temp_file, "wb") as f:
             f.write(binary_data)
@@ -411,8 +410,8 @@ async def turn_audio_to_text(
         if Debug:
             print("cdf")
 
-
         os.remove(rand_name)
+
 
         if Debug:
             print("识别结果",res)
@@ -431,6 +430,7 @@ async def turn_audio_to_text(
     
     except (FileNotFoundError, IndexError, AttributeError, TypeError) as e:
         logger.error("An error occurred: %s", e)
+        os.remove(rand_name)
         return {
                 "text": "",
                 "text_score" : 0,
@@ -442,6 +442,7 @@ async def turn_audio_to_text(
     
     except Exception as e:
         logger.error("An unexpected error occurred: %s", e)
+        os.remove(rand_name)
         return {
             "text": "",
             "text_score" : 0,
@@ -555,9 +556,9 @@ async def get_audio_bytes_by_filename(request: Request):
 
 
 if __name__ == "__main__":
-    debug_code = input("是否进入调式模式？(y/n):")
-    # debug_code = True
-    if debug_code.startswith('y'):
-        Debug = True
+    # debug_code = input("是否进入调式模式？(y/n):")
+    # # debug_code = True
+    # if debug_code.startswith('y'):
+    #     Debug = True
 
     uvicorn.run("api:app", host="0.0.0.0", port=3090, reload=True)

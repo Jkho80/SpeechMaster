@@ -1,41 +1,26 @@
 workspace=`pwd`
 
-# which gpu to train or finetune
 export CUDA_VISIBLE_DEVICES="0"
 gpu_num=$(echo $CUDA_VISIBLE_DEVICES | awk -F "," '{print NF}')
 
-# model_name from model_hub, or model_dir in local path
-
-## option 1, download model automatically
 model_name_or_model_dir="iic/speech_paraformer-large_asr_nat-zh-cn-16k-common-vocab8404-pytorch"
 
-## option 2, download model by git
-#local_path_root=${workspace}/modelscope_models
-#mkdir -p ${local_path_root}/${model_name_or_model_dir}
-#git clone https://www.modelscope.cn/${model_name_or_model_dir}.git ${local_path_root}/${model_name_or_model_dir}
-#model_name_or_model_dir=${local_path_root}/${model_name_or_model_dir}
-
-
-# data dir, which contains: train.json, val.json
-data_dir="{$workspace}/data/"
+data_dir="${workspace}/data"
 
 train_data="${data_dir}/train.jsonl"
-val_data="${data_dir}/valid.jsonl"
+val_data="${data_dir}/val.jsonl"
 
-# generate train.jsonl and val.jsonl from wav.scp and text.txt
 scp2jsonl \
-++scp_file_list='["${data_dir}/train_wav.scp", "{$data_dir}/train_text.txt"]' \
+++scp_file_list='["/home/jkho80/python_project/SpeechMaster/data/train_wav.scp", "/home/jkho80/python_project/SpeechMaster/data/train_text.txt"]' \
 ++data_type_list='["source", "target"]' \
 ++jsonl_file_out="${train_data}"
 
 scp2jsonl \
-++scp_file_list='["${data_dir}/val_wav.scp", "${data_dir}/val_text.txt"]' \
+++scp_file_list='["/home/jkho80/python_project/SpeechMaster/data/valid_wav.scp", "/home/jkho80/python_project/SpeechMaster/data/valid_text.txt"]' \
 ++data_type_list='["source", "target"]' \
 ++jsonl_file_out="${val_data}"
 
-
-# exp output dir
-output_dir="./outputs"
+output_dir="./models"
 log_file="${output_dir}/log.txt"
 
 deepspeed_config=${workspace}/deepspeed_conf/ds_stage1.json
@@ -54,7 +39,7 @@ DISTRIBUTED_ARGS="
 echo $DISTRIBUTED_ARGS
 
 torchrun $DISTRIBUTED_ARGS \
-/home/jkho80/python_project/SenseVoice/train_ds.py \
+${workspace}/train_ds.py \
 ++model="${model_name_or_model_dir}" \
 ++train_data_set_list="${train_data}" \
 ++valid_data_set_list="${val_data}" \
@@ -62,7 +47,7 @@ torchrun $DISTRIBUTED_ARGS \
 ++dataset_conf.index_ds="IndexDSJsonl" \
 ++dataset_conf.data_split_num=1 \
 ++dataset_conf.batch_sampler="BatchSampler" \
-++dataset_conf.batch_size=600  \
+++dataset_conf.batch_size=6000  \
 ++dataset_conf.sort_size=1024 \
 ++dataset_conf.batch_type="token" \
 ++dataset_conf.num_workers=4 \

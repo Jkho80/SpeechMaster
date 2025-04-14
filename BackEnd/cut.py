@@ -7,6 +7,7 @@ import numpy as np
 import librosa
 import time
 import torchaudio
+import shutil
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,7 +17,32 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # end_time = 100
 # duration = end_time - start_time
 
-# ffmpeg.input(input_video).filter('trim', start=start_time, end=end_time).output(output_video).run()
+def copy_audio_file(input_file_path, saved_audio_mix_dir):
+    try:
+        # 确保目标目录存在
+        os.makedirs(saved_audio_mix_dir, exist_ok=True)
+        
+        # 构造目标路径（保留原文件名）
+        file_name = os.path.basename(input_file_path)
+        dest_path = os.path.join(saved_audio_mix_dir, file_name)
+        
+        # 执行文件复制（使用 copy2 保留文件元数据）
+        shutil.copy2(input_file_path, dest_path)
+        
+        print(f"文件已成功复制到：{dest_path}")
+        return True
+        
+    except FileNotFoundError:
+        print(f"错误：源文件不存在 {input_file_path}")
+    except PermissionError:
+        print(f"错误：没有权限复制到 {saved_audio_mix_dir}")
+    except shutil.SameFileError:
+        print("警告：源文件与目标文件路径相同")
+    except Exception as e:
+        print(f"未知错误：{str(e)}")
+    
+    return False
+
 
 
 home_directory = os.path.expanduser("~")
@@ -67,6 +93,7 @@ saved_audio_30s_dir = os.path.join(script_dir, "saved_audios", "saved_audio_30s"
 saved_audio_1min_dir = os.path.join(script_dir, "saved_audios", "saved_audio_1min")
 saved_audio_2min_dir = os.path.join(script_dir, "saved_audios", "saved_audio_2min")
 saved_audio_long_dir = os.path.join(script_dir, "saved_audios", "saved_audio_long")
+saved_audio_mix_dir = os.path.join(script_dir, "saved_audios", "saved_audio_mix")
 
 uncut_audio_30s_files_list = [os.path.join(uncut_audio_30s_dir, file) for file in os.listdir(uncut_audio_30s_dir) if file.endswith('.wav')]
 uncut_audio_1min_files_list = [os.path.join(uncut_audio_1min_dir, file) for file in os.listdir(uncut_audio_1min_dir) if file.endswith('.wav')]
@@ -95,7 +122,7 @@ for file_list, output_list in zip([uncut_audio_30s_files_list, uncut_audio_1min_
           waveform = resampler(waveform)
 
       waveform = waveform.mean(dim=0)  # 立体声 -> 单声道
-      waveform = waveform / 32768.0    # 归一化（假设原始为int16）
+      waveform = waveform / 32768.0    # 归一化（原始为int16）
       waveform = waveform.to("cuda")
     
     # CPU方案
@@ -151,3 +178,6 @@ for file_list, output_list in zip([uncut_audio_30s_files_list, uncut_audio_1min_
 
     ffmpeg.input(file_path, ss=start_second).output(output_file_path, format="wav", ar=16000, acodec="pcm_s16le").overwrite_output().run()
 
+    success = copy_audio_file(output_file_path, saved_audio_mix_dir)
+
+    os.remove(file_path)

@@ -1,0 +1,8 @@
+送方外上人 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/送方外上人.txt
+送灵澈上人 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/送灵澈上人.txt
+逢入京使 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/逢入京使.txt
+问刘十九 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/问刘十九.txt
+闺怨 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/闺怨.txt
+静夜思 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/静夜思.txt
+鹿柴 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/鹿柴.txt
+黄鹤楼送孟浩然之广陵 /home/jkho80/python_project/SpeechMaster/unstandart_audio_txt1/黄鹤楼送孟浩然之广陵.txt

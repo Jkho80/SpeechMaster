@@ -41,21 +41,21 @@ for index, row in df.iterrows():
         txt_save_path = os.path.join(unstandart_audio_txt_dir, audio_name + '.txt')
 
         
-        # # 下载文件
-        # response = requests.get(audio_url, stream=True)
-        # response.raise_for_status()  # 检查请求是否成功
+        # 下载文件
+        response = requests.get(audio_url, stream=True)
+        response.raise_for_status()  # 检查请求是否成功
 
-        # music = response.content
+        music = response.content
         
-        # with open("temp.mp3", 'wb') as f:
-        #     f.write(music)
-        #     f.flush()
+        with open("temp.mp3", 'wb') as f:
+            f.write(music)
+            f.flush()
 
         with open(txt_save_path, 'w', encoding='utf-8') as f:
             f.write(audio_content)
             f.close()
 
-        # binary_to_audio("temp.mp3", save_path)
+        binary_to_audio("temp.mp3", save_path)
         
         print(f"成功下载: {save_path}")
 

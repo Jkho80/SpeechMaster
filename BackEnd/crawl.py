@@ -60,6 +60,8 @@ def scrape_poem(poem_url, headers):
         content_tag = soup.find("div", class_="contson")
         if content_tag:
             data["content"] = content_tag.get_text("\n", strip=True)
+            # if len(data["content"]) < 40:
+            #     return data
 
         # Find the <img> with ID starting "speakerimg", to get the audio
         speaker_imgs = soup.find_all("img", id=True)
@@ -84,7 +86,7 @@ def main():
         )
     }
 
-    with open("gushiwen_poems.csv", "w", encoding="utf-8", newline="") as csv_file:
+    with open("gushiwen_poems2.csv", "w", encoding="utf-8", newline="") as csv_file:
         fieldnames = ["url", "title", "author", "dynasty", "content", "audio_url"]
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writeheader()
@@ -106,11 +108,12 @@ def main():
                 visited.add(poem_url)
                 # Scrape each poem
                 poem_data = scrape_poem(poem_url, headers)
-                writer.writerow(poem_data)
-                print(f"Scraped {poem_data['title']} => Audio: {poem_data['audio_url']}")
+                if len(poem_data["content"]) > 40:
+                    writer.writerow(poem_data)
+                    print(f"Scraped {poem_data['title']} => Audio: {poem_data['audio_url']}")
 
                 # Sleep randomly to avoid hammering the server
-                time.sleep(random.uniform(1, 3))
+                time.sleep(random.uniform(0, 1))
 
 
 if __name__ == "__main__":

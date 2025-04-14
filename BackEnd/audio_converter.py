@@ -1,5 +1,9 @@
 import ffmpeg
 import os
+import shutil
+from pydub import AudioSegment
+from pydub.utils import mediainfo
+
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 audio_convert_dir = os.path.join(script_dir, "unstandart_audio")
@@ -19,9 +23,13 @@ for idx, item in enumerate(files_path):
     print(f"{idx + 1}. {item}")
     file_name = os.path.basename(item)
 
-    # 获取音频时长
-    probe = ffmpeg.probe(item)
-    audio_duration = float(probe['format']['duration'])
+    # ffmpeg 获取音频时长
+    # probe = ffmpeg.probe(item)
+    # audio_duration = float(probe['format']['duration'])
+
+    audio_info = mediainfo(item)
+    audio_duration = float(audio_info["duration"])
+
 
     # 根据时长分类
     if audio_duration < 30:
@@ -37,3 +45,5 @@ for idx, item in enumerate(files_path):
     print("new file name :", output_file_name)
 
     process = ffmpeg.input(item).output(output_file_name, format="wav", ar=16000, ac=1, acodec="pcm_s16le").overwrite_output().run()
+
+    os.remove(item)
