@@ -648,16 +648,16 @@ def get_random_poem(files_path: str, score_dir: str):
     
 
 if __name__ == "__main__":
-    # debug_code = input("是否显示输出值？ (y/n):").lower()
-    debug_code = "n"
+    debug_code = input("是否显示输出值？ (y/n):").lower()
+    # debug_code = "n"
 
     if debug_code != "" and debug_code[0] == "y":
         debug = True
 
     mode_list = ["30s", "1min", "2min", "long"]
     
-    # mode = input("输入游戏时长 (30s | 1min | 2min | long): ").lower()
-    mode = "2min"
+    mode = input("输入游戏时长 (30s | 1min | 2min | long): ").lower()
+    # mode = "2min"
 
     if mode not in mode_list:
         print("输入错误的时长选项")
@@ -665,23 +665,23 @@ if __name__ == "__main__":
     
     game_mode_list = ["split", "full"]
 
-    # game_mode = input("输入模式(split | full):").lower()
-    game_mode = "full"
+    game_mode = input("输入模式(split | full):").lower()
+    # game_mode = "full"
 
     if game_mode not in game_mode_list:
         print("输入错误的游戏模式选项")
         exit(0)
 
 
-    audio_directory = os.path.join("/home/jkho80/python_project/SenseVoice/saved_audios/saved_audio_" + mode)
+    audio_directory = os.path.join(script_dir, "saved_audios", "saved_audio_" + mode)
     # target_dir = "/home/jkho80/python_project/SenseVoice/audio_file_2min"
-    score_dir = os.path.join("/home/jkho80/python_project/SenseVoice/" + game_mode + "_mode", "score_" + mode)
+    score_dir = os.path.join(script_dir, game_mode + "_mode", "score_" + mode)
     
     # files_path = [os.path.join(audio_directory, file) for file in os.listdir(audio_directory) if file.endswith('.wav') or file.endswith('.mp3')]
     files_path = [os.path.join(audio_directory, file) for file in os.listdir(audio_directory) if file.endswith('.wav')]
 
-    # score_code = input("是否进行评分？(y/n): ").lower()
-    score_code = "y"
+    score_code = input("是否进行评分？(y/n): ").lower()
+    # score_code = "y"
     if score_code != "" and score_code[0] == "y":
         if debug:
             print('音频文件名：')
@@ -692,8 +692,8 @@ if __name__ == "__main__":
 
 
     
-    # get_rand_code = input("是否进行随机获取测试？(y/n): ")
-    get_rand_code = "y"
+    get_rand_code = input("是否进行随机获取测试？(y/n): ")
+    # get_rand_code = "y"
     if get_rand_code != "" and get_rand_code[0].lower() == "y":
         sound_score_and_data, audio_path = get_random_poem(audio_directory, score_dir)
         
@@ -705,118 +705,3 @@ if __name__ == "__main__":
 
 
 
-
-# def analyze_pitch_and_tempo(audio_data: Tensor, sample_rate: int):
-#     """Analyze the pitch and tempo of an audio file using librosa."""
-#     # Convert tensor to numpy array
-#     waveform = audio_data.numpy()
-
-#     # Extract pitch using librosa.pyin (more robust than piptrack)
-#     pitches, _, _ = librosa.pyin(waveform, fmin=librosa.note_to_hz('C2'), fmax=librosa.note_to_hz('C7'), sr=sample_rate)
-#     avg_pitch = np.nanmean(pitches)  # Ignore NaN values
-
-#     # Estimate tempo using energy envelope (simpler than beat_track)
-#     energy = np.abs(waveform)
-#     tempo = np.mean(energy) * 100  # Arbitrary scaling for analysis
-
-#     return avg_pitch, tempo
-
-# def analyze_rhythm_and_pauses(audio_data: Tensor, sample_rate: int, silence_threshold: float = 0.01):
-#     """Detect rhythm and pauses by analyzing silence duration."""
-#     # Convert tensor to numpy array
-#     waveform = audio_data.numpy()
-
-#     # Detect silent regions using librosa
-#     non_silent_regions = librosa.effects.split(waveform, top_db=30)  # Adjust top_db as needed
-#     total_silence = sum(end - start for start, end in non_silent_regions)
-#     pause_ratio = total_silence / len(waveform)
-
-#     return pause_ratio
-
-# def get_score_and_save(files, audio_dir):
-#     audios = []
-#     recognized_text = []
-#     recognized_raw_text = []
-#     tempos = []
-#     pitches = []
-#     pauses = []
-
-#     audio_fs = 16000  # Target sample rate
-
-#     item = []
-
-#     for file in files:
-#         with open(file, 'rb') as f:
-#             file_bytes = f.read()
-
-#         file_io = convert_audio_to_wav(file_bytes) # Convert input to 16kHz WAV
-#         # file_io = convert_audio_to_wav(file) # Convert input to 16kHz WAV
-#         if not file_io:
-#             return {"error": "Failed to process audio file"}
-
-#         file_name = os.path.basename(file)
-        
-#         print(f"file: {file_name}")
-
-#         data, _ = torchaudio.load(file_io)  # Load audio as tensor
-#         # print(data.size())
-        
-#         # data = data.mean(0, keepdim=True)  # Convert stereo to mono if needed
-#         # data = data.mean(1, keepdim=True)  # Convert stereo to mono if needed
-#         # print(data.size())
-
-#         res = m.inference(
-#             data_in=data,
-#             language="auto",
-#             use_itn=False,
-#             ban_emo_unk=False,
-#             key=file_name,
-#             fs=audio_fs,
-#             **kwargs,
-#         )
-
-
-        # for it in res[0]: # res[0] 是 返回值, res[0][0] 是第一个音频数据的识别（输入是一个列表输出亦是）
-        #     it["raw_text"] = it["text"]
-        #     it["clean_text"] = re.sub(regex, "", it["text"], 0, re.MULTILINE)
-        #     it["text"] = rich_transcription_postprocess(it["raw_text"])
-        
-#         recognized_text.append(res[0][0]["text"])
-#         recognized_raw_text.append(res[0][0]["raw_text"])
-
-#         avg_pitch, tempo = analyze_pitch_and_tempo(data, audio_fs)
-#         # avg_pitch, tempo = f'{avg_pitch:.3f}', f'{tempo:.3f}'
-
-#         pause = analyze_rhythm_and_pauses(data, audio_fs)
-#         # pause = f'{pause:.3f}'
-
-#         with io.BytesIO() as buffer:
-#             torchaudio.save(os.path.join(audio_dir, file_name), data, audio_fs)
-#             buffer.seek(0)
-#             audios.append(buffer.read())
-    
-#         pitches.append(avg_pitch)
-#         tempos.append(tempo)
-#         pauses.append(pause)
-#         audios.append(data)
-
-#         file_io.close()
-
-#     with open('/home/jkho80/python_project/SenseVoice/scores.csv', 'w', newline='') as csvfile:
-#         writer = csv.writer(csvfile)
-#         writer.writerow(['filename', 'text', 'tempo', 'pitch', 'pause', 'raw_text'])
-#         for i, file in enumerate(tqdm.tqdm(files)):
-#             # print(file.split('/')[-1], recognized_text[i], tempos[i], pitches[i], pauses[i], recognized_raw_text[i])
-#             try:
-#                 writer.writerow([
-#                     file.split('/')[-1], 
-#                     recognized_text[i], 
-#                     "{:.3f}".format(tempos[i]),  # 格式化为三位小数
-#                     "{:.3f}".format(pitches[i]),  # 格式化为三位小数
-#                     "{:.3f}".format(pauses[i]),   # 格式化为三位小数
-#                     recognized_raw_text[i]
-#                 ])
-#             except IndexError as e:
-#                 print(f"Error writing row {i}: {e}")
-#             except Exception as e:
-#                 print(f"An unexpected error occurred: {e}")

@@ -20,7 +20,7 @@ res = model.generate(
     sentence_timestamp=True,
     )
 
-wav_file_text = os.path.join(script_dir, "unstandart_audio_txt1", wav_file_name[:-4] + ".txt")
+wav_file_text = os.path.join(script_dir, "unstandart_audio_txt", wav_file_name[:-4] + ".txt")
 
 with open(wav_file_text) as f:
     text = f.read()

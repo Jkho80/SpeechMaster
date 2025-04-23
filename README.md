@@ -169,18 +169,21 @@ time_mode: str      # 时长类型（"30s"|"1min"|"2min"|"long"，默认30s）
 
 运行完前面的所有指令后只需要运行 `finetune.sh` 即可开始微调模型，微调完成后便可通过输入模型权重路径使用新的模型进行评分。
 
+> *注：* 需要将 finetune.sh 中的scp文件路径换成用户自己的路径。
+
 ```python
 import os
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+# 该路径是 finetune.sh 当中的 $output_dir, 可根据需要自己将 $output_dir = './models' 换成自己的路径想要的
 model_dir = os.path.join(script_dir, 'models')
 
 model = AutoModel(model=model_dir)
 
 result = model.generate(
     input=input,
-    batch_size_s=1, 
+    batch_size_s=1, ****
     is_final=True, 
     sentence_timestamp=True,
 )
